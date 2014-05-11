@@ -27,6 +27,7 @@ typedef struct edge_node {
 } edge;
 
 vertex* graph_add_vertex(graph*, graph_type);
+void graph_add_edge_ele(graph*, graph_type, graph_type);
 void graph_add_edge(vertex*, vertex*);
 
 void print_graph(graph*);
@@ -35,3 +36,4 @@ graph* create_graph();
 void destroy_graph(graph*);
 
 #endif
+

@@ -34,6 +34,26 @@ vertex* graph_add_vertex(graph* the_graph, graph_type element) {
     return new_vert;
 }
 
+// uses the first vertex node containing a given element to add an edge
+void graph_add_edge_ele(graph* g, graph_type src, graph_type dest) {
+    if (g == NULL || g->vertices == NULL) return;
+
+    vertex* a = NULL;
+    vertex* b = NULL;
+    // find the nodes in the graph
+    vertex* node;
+    for (node = g->vertices; node != NULL; node = node->next) {
+        if (node->element == src) {
+            a = node;
+            if (b != NULL) break;
+        } else if (node->element == dest) {
+            b = node;
+            if (a != NULL) break;
+        }
+    }
+    graph_add_edge(a, b);
+}
+
 void graph_add_edge(vertex* src, vertex* dest) {
     if (src == NULL || dest == NULL) {
         // this is bad
@@ -115,8 +135,8 @@ void destroy_graph(graph* a_graph) {
 }
 
 void print_graph(graph* g) {
-    if (g->size <= 0) {
-        printf("Empty graph.");
+    if (g == NULL || g->size <= 0) {
+        printf("Empty graph.\n");
         return;
     }
 
