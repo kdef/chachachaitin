@@ -9,8 +9,8 @@ Implementation of [Chaitin's graph coloring register allocation algorithm](http:
     Cha Cha Chaitin:
     ----------------
     Enter number of vertices in graph: 3
-    Enter number of edges: 2
     * added vertices a through c
+    Enter number of edges: 2
     Enter edges one by one in form <source><space><target>
     Edge 1: a b
     Edge 2: a c
