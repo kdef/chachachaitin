@@ -64,6 +64,7 @@ int main(int argc, char * argv[]) {
     printf("* %d colored graph\n", num_colors);
     print_graph(g);
 
+    destroy_graph(g);
     return EXIT_SUCCESS;
 }
 
