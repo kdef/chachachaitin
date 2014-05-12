@@ -26,18 +26,20 @@ int main(int argc, char * argv[]) {
     graph* g = create_graph();
 
     // prompt for size
-    fputs("Enter number of vertices in graph (<1000): ", stdout);
-    fflush(stdout);
-    fgets(input, sizeof input, stdin);
-    sscanf(input, "%d", &num_vertices);
+    while ((num_vertices <= 0) || (num_vertices > 26)) {
+        fputs("Enter number of vertices in graph (<27): ", stdout);
+        fflush(stdout);
+        fgets(input, sizeof input, stdin);
+        sscanf(input, "%d", &num_vertices);
+    }
+
+    add_vertices_abc(g, num_vertices);
+    printf("* added vertices a through %c\n", 'a'+num_vertices-1);
 
     fputs("Enter number of edges: ", stdout);
     fflush(stdout);
     fgets(input, sizeof input, stdin);
     sscanf(input, "%d", &num_edges);
-
-    add_vertices_abc(g, num_vertices);
-    printf("* added vertices a through %c\n", 'a'+num_vertices-1);
 
     // read in all edges in form "src dest"
     int i;
