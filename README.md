@@ -1,4 +1,4 @@
-Cha Cha Chaitan
+Cha Cha Chaitin
 ===============
 
 Implementation of [Chaitin's graph coloring register allocation algorithm](http://en.wikipedia.org/wiki/Chaitin%27s_algorithm) in C.
