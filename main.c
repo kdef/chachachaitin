@@ -50,7 +50,7 @@ int main(int argc, char * argv[]) {
         printf("Edge %d: ", i+1);
         fgets(input, sizeof input, stdin);
         sscanf(input, "%c %c", &src, &dest);
-        graph_add_edge_ele(g, src, dest);
+        graph_add_edge(graph_get_vertex(g, src), graph_get_vertex(g, dest));
     }
     printf("* added %d edges\n", num_edges);
 
