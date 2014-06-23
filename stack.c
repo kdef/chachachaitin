@@ -8,13 +8,13 @@
 int top = EMPTY_STACK;
 
 // make some room for the stack
-stack_type* stack[MAX_STACK_SIZE];
+void* stack[MAX_STACK_SIZE];
 
-void push(stack_type* item) {
+void push(void* item) {
     stack[++top] = item;
 }
 
-stack_type* pop() {
+void* pop() {
     return stack[top--];
 }
 
