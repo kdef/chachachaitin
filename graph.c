@@ -20,38 +20,45 @@ vertex* graph_add_vertex(graph* the_graph, graph_type element) {
     new_vert->next = NULL;
 
     vertex* cur_vertex = the_graph->vertices;
-    if (cur_vertex != NULL) {
+    if (cur_vertex == NULL) {
+        the_graph->vertices = new_vert;
+    } else {
+        // put at the end
         while (cur_vertex->next != NULL) {
             cur_vertex = cur_vertex->next;
         }
         cur_vertex->next = new_vert;
-    } else {
-        // put at the front
-        the_graph->vertices = new_vert;
     }
     the_graph->size++;
 
     return new_vert;
 }
 
-// uses the first vertex node containing a given element to add an edge
-void graph_add_edge_ele(graph* g, graph_type src, graph_type dest) {
-    if (g == NULL || g->vertices == NULL) return;
-
-    vertex* a = NULL;
-    vertex* b = NULL;
-    // find the nodes in the graph
+vertex* graph_get_vertex(graph* g, graph_type element) {
     vertex* node;
     for (node = g->vertices; node != NULL; node = node->next) {
-        if (node->element == src) {
-            a = node;
-            if (b != NULL) break;
-        } else if (node->element == dest) {
-            b = node;
-            if (a != NULL) break;
-        }
+        if (node->element == element) return node;
     }
-    graph_add_edge(a, b);
+    return NULL;
+}
+
+// helper to create an edge
+void graph_create_edge(vertex* from, vertex* to) {
+    edge* new_edge = malloc(sizeof(edge));
+    new_edge->to = to;
+    new_edge->next = NULL;
+
+    edge* last_edge = from->edges;
+    if (last_edge == NULL) {
+        from->edges = new_edge;
+    } else {
+        // insert at the end
+        while (last_edge->next != NULL) {
+            last_edge = last_edge->next;
+        }
+        last_edge->next = new_edge;
+    }
+    from->num_edges++;
 }
 
 void graph_add_edge(vertex* src, vertex* dest) {
@@ -60,38 +67,11 @@ void graph_add_edge(vertex* src, vertex* dest) {
         return;
     }
 
-    edge* new_edge = malloc(sizeof(edge));
-    new_edge->to = dest;
-    new_edge->next = NULL;
-
-    edge* last_edge = src->edges;
-    if (last_edge != NULL) {
-        while (last_edge->next != NULL) {
-            last_edge = last_edge->next;
-        }
-        last_edge->next = new_edge;
-    } else {
-        src->edges = new_edge;
-    }
-    src->num_edges++;
+    graph_create_edge(src, dest);
 
     // add another edge if the graph is undirected
-    if (1 == 1) {
-        edge* new_edge = malloc(sizeof(edge));
-        new_edge->to = src;
-        new_edge->next = NULL;
-
-        last_edge = dest->edges;
-        if (last_edge != NULL) {
-            while (last_edge->next != NULL) {
-                last_edge = last_edge->next;
-            }
-            last_edge->next = new_edge;
-        } else {
-            dest->edges = new_edge;
-        }
-        dest->num_edges++;
-    }
+    // TODO: assume always undirected for now
+    graph_create_edge(dest, src);
 }
 
 graph* create_graph() {
@@ -134,6 +114,7 @@ void destroy_graph(graph* a_graph) {
     free(a_graph);
 }
 
+// assumes element is a char
 void print_graph(graph* g) {
     if (g == NULL || g->size <= 0) {
         printf("Empty graph.\n");
